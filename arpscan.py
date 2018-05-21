@@ -8,21 +8,21 @@ from scapy.all import *
 
 # forked from DHCPig - thank you folks!
 def get_if_net(iff):
-    for net, msk, gw, iface, addr in read_routes():
-        if (iff == iface and net != 0L):
+    for net, msk, gw, iface, addr, metric in read_routes():
+        if (iff == iface and net != 0):
             return ltoa(net)
     raise ("No net address found for iface %s\n" % iff)
 
 def get_if_msk(iff):
-    for net, msk, gw, iface, addr in read_routes():
-        if (iff == iface and net != 0L):
+    for net, msk, gw, iface, addr, metric in read_routes():
+        if (iff == iface and net != 0):
             return ltoa(msk)
     raise  ("No net address found for iface %s\n" % iff)
 
 
 def get_if_ip(iff):
-    for net, msk, gw, iface, addr in read_routes():
-        if (iff == iface and net != 0L):
+    for net, msk, gw, iface, addr, metric in read_routes():
+        if (iff == iface and net != 0):
             return addr
     raise ("No net address found for iface %s\n" % iff)
 
@@ -68,8 +68,9 @@ def arpscan(debug=False,
                addresses.append('.'.join(prefix)+'.'+peer)
         else:
             for ip in pool:
+                #~ print(ip)
                 peer = str(ip).split('.')[-1] 
-                if peer not in excluded and peer not in addresses:
+                if peer not in excluded:
                     addresses.append(ip)
     # scan selected networks
     else:
