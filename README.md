@@ -14,7 +14,7 @@ This tools is a personal revision about netdiscover and arp-scan feature sets.
 
 #### arpscan usage 
 ````
-python2 arpscan.py --help
+sudo python2 arpscan.py --help
 
 usage: arpscan.py [-h] -i I [-r R [R ...]] [-t T]
                   [-exclude EXCLUDE [EXCLUDE ...]] [-only ONLY [ONLY ...]]
