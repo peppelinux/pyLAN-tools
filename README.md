@@ -33,7 +33,7 @@ optional arguments:
                         test only these peers. Example: 1 2 3 4 5 6 7 8 9 10
                         50 150 200 250 251 252 253 254
 
-  -debug                interface to start listen to
+  -debug                prints things to stdout
 ````
 
 #### arpscan examples
