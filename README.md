@@ -38,11 +38,10 @@ optional arguments:
 
 #### arpscan examples
 ````
-# scans only selected peers on the localnetwork configured on eth2 interface
+# scans only selected peers in the local network configured on eth2 interface
 python2 arpscan.py -i eth2 -t 0.01 -only 1 2 3 4 5 6 7 8 9 10 50 150 200 250 251 252 253 254
 10.21.0.75 bc:5f:f4:f4:d0:d9 (eth2)
 10.21.0.254 d4:ca:6d:e6:6a:d7
-
 
 # scans only selected networks
 python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24
@@ -52,12 +51,13 @@ python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24
 
 - -only option improvements for CIDR lower than /24 (performance improvements)
 - parallelization with subprocess per every -r lans (performance improvements)
-- vendor database intergration (as netdiscover and arp-scan does)
+- choose a number of worker to delegate a subset of addresses (address_pool/num_workers)
+- vendor database intergration and representation (as netdiscover and arp-scan does)
 
 ## Arp-listener
-Arp-listener is an old proof-of-concept of a ARP event listener with the ability to sniff
-ARP requests and run callback based on filtered event. It was written in few hours
-and will be continued in the future.
+Arp-listener is an old proof-of-concept of an ARP event listener. It would sniff
+ARP requests and run callback based on filtered event. It was written in few hours during a summer night
+and will be continued in the future... This should sound a bit more romantic.
 
 It hopefully wants to implement a pro-active defense when ARP poisoning 
 activities are detected.
@@ -66,4 +66,4 @@ activities are detected.
 This is a rework of the famous: https://github.com/pentestmonkey/gateway-finder
 
 I just want to clean the code and integrate a native arp scanner to avoid the use of thirdy-party app as arp-scan.
-This and some other general improvements.
+This and some other general improvements. 
