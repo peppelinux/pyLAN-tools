@@ -46,9 +46,8 @@ def arpscan(debug=False,
             only = [1,2,3,4,5,10,50,100,150,200,250,251,252,253,254], 
             timeout=0.05):
     """
-    ARP and create map of LAN neighbors 
+    search for LAN neighbors 
     """
-    #global dhcpsip, subnet, nodes
     nodes = {}
     addresses = []
     
