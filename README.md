@@ -5,7 +5,7 @@ Python Scapy tools developed for LAN tests and advanced reconnaissance.
 ## Requirements
 
 ````
-pip2 install scapy
+pip install scapy
 ````
 
 ## arpscan

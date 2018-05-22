@@ -1,11 +1,10 @@
-#/usr/bin/env python
+#/usr/bin/env python3
 
 # suppress "WARNING: No route found for IPv6 destination :: (no default route?)"
 import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
 from scapy.all import *
-
 # forked from DHCPig - thank you folks!
 def get_if_net(iff):
     for net, msk, gw, iface, addr, metric in read_routes():
