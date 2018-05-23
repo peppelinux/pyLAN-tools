@@ -60,7 +60,9 @@ Create an unsolicited ARP RESPONSE packet to a target.
 This technic can be used to ARP poison the neighbour's caches or
 send unsolicitated ARP response to mitigate ARP poison attacks.
 This means that the same thing that is used as an attack is the only
-solution to defense from it, if we have any static ARP definition in our systems (who have this?).
+solution to defense from it.
+
+Another solution would be we having a static ARP definition in our systems... But, really, who have this?
 
 ````
 # gratuitous arp reply regarding you
