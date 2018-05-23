@@ -7,12 +7,12 @@ def arp_reply(ipaddr_to_advertise,
               src_mac,
               dst_mac,
               count):
-    eth = Ether(src=src_mac,dst=dst_mac)
+    eth = Ether(dst=dst_mac)
     arp = ARP(psrc=ipaddr_to_advertise, 
               hwsrc=src_mac, 
-              pdst=ipaddr_to_advertise, 
-              hwdst=src_mac, op=2)
-    for i in range(count+1):
+              #pdst=ipaddr_to_advertise, 
+              hwdst=dst_mac, op=2)
+    for i in range(count):
         sendp(eth/arp)
 
 
@@ -30,7 +30,7 @@ if __name__=="__main__":
     parser.add_argument('-ip', required=False,
                         help="ip to announce")
     parser.add_argument('-count', required=False, type=int,
-                        default=100,
+                        default=10,
                         help="how many times")
     args = parser.parse_args()
     conf.iface = args.i

@@ -9,11 +9,9 @@ pip3 install scapy
 pip3 install netaddr
 ````
 
-## arpscan
-This tools is a personal revision about netdiscover and arp-scan feature sets.
-
-
-#### arpscan usage 
+## ARP Scanning
+Arpscan.py is a personal revision about netdiscover and arp-scan feature sets.
+ 
 ````
 sudo python2 arpscan.py --help
 
@@ -37,7 +35,7 @@ optional arguments:
   -debug                prints things to stdout
 ````
 
-#### arpscan examples
+#### arpscan usage examples
 ````
 # scans only selected peers in the local network configured on eth2 interface
 python2 arpscan.py -i eth2 -t 0.01 -only 1 2 3 4 5 6 7 8 9 10 50 150 200 250 251 252 253 254
@@ -56,13 +54,15 @@ python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24
 - vendor database intergration and representation (as netdiscover and arp-scan does)
 
 ## Gratuitous ARP response
-Create an unsolicited ARP RESPONSE packet to a target.
+Create an unsolicited ARP RESPONSE to a target.
 This technic can be used to ARP poison the neighbour's caches or
 send unsolicitated ARP response to mitigate ARP poison attacks.
-This means that the same thing that is used as an attack is the only
+This means that the same thing that is used to attack would be the only
 solution to defense from it.
 
 Another solution would be we having a static ARP definition in our systems... But, really, who have this?
+
+[addrwatch](https://github.com/fln/addrwatch) is a good monitoring system for this kind of attacks.
 
 ````
 # gratuitous arp reply regarding you
@@ -78,14 +78,14 @@ python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2
 python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2 -d 10:fe:ed:78:34:ae
 ````
 While running gratuitous ARP responses, even if you are running an
-attack or a defense, you can always test id ARP cache is poisoned testing
-it with arping
+attack or a defense, you can always test if an ARP cache is poisoned, testing
+it with arping or locally with arp -an.
 
 ````
 # this is what your want to be pushed to neighbors arp cache
 while [ 1 ]; do python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2; done
 
-# this what you can do fot test the efficiency of the previous command
+# this what you can do for test the efficiency of the previous command
 
 root@yogurt:/home/wert/DEV/pyLAN-tools# arping -I wlp2s0 192.168.7.2
 ARPING 192.168.7.2
@@ -95,7 +95,7 @@ ARPING 192.168.7.2
 ````
 
 ### TODO
-- create different workers to paralellize arp sending
+- create different workers to parallelize arp sending
 - scan neighbours and use their MAC address to randomly craft ARP response with them
 
 ## Arp-listener
