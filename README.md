@@ -57,8 +57,10 @@ python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24
 
 ## Gratuitous ARP response
 Create an unsolicited ARP RESPONSE packet to a target.
-These could be used to ARP poison the neighbour's caches or
+This technic can be used to ARP poison the neighbour's caches or
 send unsolicitated ARP response to mitigate ARP poison attacks.
+This means that the same thing that is used as an attack is the only
+solution to defense from it, if we have any static ARP definition in our systems (who have this?).
 
 ````
 # gratuitous arp reply regarding you
