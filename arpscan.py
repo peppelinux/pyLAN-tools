@@ -5,6 +5,7 @@ import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
 from scapy.all import *
+from netaddr import IPNetwork
 # forked from DHCPig - thank you folks!
 def get_if_net(iff):
     for net, msk, gw, iface, addr, metric in read_routes():
@@ -54,8 +55,9 @@ def arpscan(debug=False,
     if not networks:
         myip  = get_if_ip(conf.iface)
         mymac = get_if_hwaddr(conf.iface)
-        if debug: print("arpscan:  net = %s  : msk = %s  : CIDR = %s" % (get_if_net(conf.iface),get_if_msk(conf.iface),calcCIDR(get_if_msk(conf.iface))))
-        pool = Net(myip + "/" + calcCIDR(get_if_msk(conf.iface)))
+        cidr = calcCIDR(get_if_msk(conf.iface))
+        if debug: print("arpscan:  net = %s  : msk = %s  : CIDR = %s" % (get_if_net(conf.iface),get_if_msk(conf.iface), cidr))
+        pool = IPNetwork(myip + "/" + cidr)
         if myip in pool:
             nodes[myip] =  mymac
             print(' '.join((myip, mymac, '(%s)' % conf.iface)))
@@ -76,22 +78,23 @@ def arpscan(debug=False,
         for n in networks:
             net, mask = n.split('/')
             if debug: print("arpscan:  net = %s  : CIDR = /%s" % (net, mask))
-            pool = Net(n)
+            pool = IPNetwork(n)
 
             if only:
-                prefix = str(pool.choice()).split('.')[0:-1]
-                for peer in only:
-                   addresses.append('.'.join(prefix)+'.'+peer)
+                for ip in pool:
+                    suffix = str(ip).split('.')[-1]
+                    if suffix in only:
+                       addresses.append(str(ip))
             else:
                 for ip in pool:
                     if ip not in excluded:
-                        addresses.append(ip)
+                        addresses.append(str(ip))
     
     
     
     for ip in addresses:
         if debug: print('Who-as %s' % ip)
-        arp_request = Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip)
+        arp_request = Ether(src=get_if_hwaddr(conf.iface),dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=ip)
         ans, unans = srp(arp_request, timeout=timeout, iface=conf.iface, verbose=debug)
         if ans:
             first_response = ans[0]

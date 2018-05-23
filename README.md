@@ -5,7 +5,8 @@ Python Scapy tools developed for LAN tests and advanced reconnaissance.
 ## Requirements
 
 ````
-pip install scapy
+pip3 install scapy
+pip3 install netaddr
 ````
 
 ## arpscan
