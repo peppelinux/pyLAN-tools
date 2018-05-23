@@ -74,9 +74,8 @@ arp_reply.py -i wlp2s0 -s 10:fe:ed:78:34:ae -ip 10.87.7.1
 # arp poison to broadcast, target is ff:ff:ff:ff:ff:ff
 python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2
 
-# arp poison attack to a specific target
-# do not do at home!
-python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2
+# arp poison attack to a specific target (10:fe:ed:78:34:ae)
+python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2 -d 10:fe:ed:78:34:ae
 ````
 While running gratuitous ARP responses, even if you are running an
 attack or a defense, you can always test id ARP cache is poisoned testing
