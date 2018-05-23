@@ -19,7 +19,7 @@ sudo python2 arpscan.py --help
 
 usage: arpscan.py [-h] -i I [-r R [R ...]] [-t T]
                   [-exclude EXCLUDE [EXCLUDE ...]] [-only ONLY [ONLY ...]]
-                  [-shuffle] [-debug]
+                  [-debug]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -51,9 +51,49 @@ python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24
 #### arpscan todo
 
 - -only option improvements for CIDR lower than /24 (performance improvements)
-- parallelization with subprocess per every -r lans (performance improvements)
+- parallelization with subprocess per every -r lan (performance improvements)
 - choose a number of worker to delegate a subset of addresses (address_pool/num_workers)
 - vendor database intergration and representation (as netdiscover and arp-scan does)
+
+## Gratuitous ARP response
+Create an unsolicited ARP RESPONSE packet to a target.
+These could be used to ARP poison the neighbour's caches or
+send unsolicitated ARP response to mitigate ARP poison attacks.
+
+````
+# gratuitous arp reply regarding you
+python3 arp_reply.py -i wlp2s0
+
+# gratuitous arp reply to defend your gateway :)
+arp_reply.py -i wlp2s0 -s 10:fe:ed:78:34:ae -ip 10.87.7.1
+
+# arp poison to broadcast, target is ff:ff:ff:ff:ff:ff
+python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2
+
+# arp poison attack to a specific target
+# do not do at home!
+python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2
+````
+While running gratuitous ARP responses, even if you are running an
+attack or a defense, you can always test id ARP cache is poisoned testing
+it with arping
+
+````
+# this is what your want to be pushed to neighbors arp cache
+while [ 1 ]; do python3 arp_reply.py -i wlp2s0 -s 00:45:a2:ef:ff:ea -ip 192.168.7.2; done
+
+# this what you can do fot test the efficiency of the previous command
+
+root@yogurt:/home/wert/DEV/pyLAN-tools# arping -I wlp2s0 192.168.7.2
+ARPING 192.168.7.2
+42 bytes from 00:45:a2:ef:ff:ea (192.168.7.2): index=0 time=770.032 msec
+42 bytes from 00:45:a2:ef:ff:ea (192.168.7.2): index=1 time=802.075 msec
+42 bytes from 00:45:a2:ef:ff:ea (192.168.7.2): index=2 time=833.749 msec
+````
+
+### TODO
+- create different workers to paralellize arp sending
+- scan neighbours and use their MAC address to randomly craft ARP response with them
 
 ## Arp-listener
 Arp-listener is an old proof-of-concept of an ARP event listener. It would sniff
