@@ -37,25 +37,24 @@ optional arguments:
 
 #### arpscan usage examples
 ````
-# scans only selected peers in the local network configured on eth2 interface
+# scans only selected peers in the local network reachable on eth2 interface
 python2 arpscan.py -i eth2 -t 0.01 -only 1 2 3 4 5 6 7 8 9 10 50 150 200 250 251 252 253 254
 10.21.0.75 bc:5f:f4:f4:d0:d9 (eth2)
 10.21.0.254 d4:ca:6d:e6:6a:d7
 
 # scans only selected networks
-python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24
+python2 arpscan.py -i eth2 -t 0.01 -r 192.168.0.0/24 192.168.1.0/24 172.17.0.0/12
 192.168.1.1 08:00:27:7c:f9:41
 ````
 #### arpscan todo
 
-- -only option improvements for CIDR lower than /24 (performance improvements)
 - parallelization with subprocess per every -r lan (performance improvements)
 - choose a number of worker to delegate a subset of addresses (address_pool/num_workers)
-- vendor database intergration and representation (as netdiscover and arp-scan does)
+- vendor database intergration and representation (as netdiscover already does)
 
 ## Gratuitous ARP response
 Create an unsolicited ARP RESPONSE to a target.
-This technic can be used to ARP poison the neighbour's caches or
+This technic can be used to ARP poison the neighbour's cache or
 send unsolicitated ARP response to mitigate ARP poison attacks.
 This means that the same thing that is used to attack would be the only
 solution to defense from it.
